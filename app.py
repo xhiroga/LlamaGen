@@ -23,7 +23,7 @@ model2ckpt = {
 }
 
 def load_model(args):
-    ckpt_folder = "./"
+    ckpt_folder = "./pretrained_models/"
     vq_ckpt, gpt_ckpt, image_size = model2ckpt[args.gpt_model]
     hf_hub_download(repo_id="FoundationVision/LlamaGen", filename=vq_ckpt, local_dir=ckpt_folder)
     hf_hub_download(repo_id="FoundationVision/LlamaGen", filename=gpt_ckpt, local_dir=ckpt_folder)
@@ -43,7 +43,7 @@ def load_model(args):
     args.gpt_ckpt = f"{ckpt_folder}{gpt_ckpt}"
     llm = LLM(
         args=args, 
-        model='serve/fake_json/{}.json'.format(args.gpt_model), 
+        model='autoregressive/serve/fake_json/{}.json'.format(args.gpt_model), 
         gpu_memory_utilization=0.6, 
         skip_tokenizer_init=True)
     print(f"gpt model is loaded")
